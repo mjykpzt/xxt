@@ -1,6 +1,7 @@
 from Browser_tools import BrowserReader
 import requests
 
+
 class RequestXXT():
     def __init__(self, url):
         self.url = url

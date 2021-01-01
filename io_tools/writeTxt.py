@@ -21,4 +21,4 @@ class WriteTxt():
         self.__log(top, len(c))
 
     def __log(self, a, b):
-        print("{}下载完成，共{}题".format(a,b))
+        print("{}下载完成，共{}题".format(a, b))
