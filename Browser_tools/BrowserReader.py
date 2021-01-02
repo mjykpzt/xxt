@@ -6,7 +6,7 @@ from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from win32crypt import CryptUnprotectData
 
 
-class GoogleBrowerCookie():
+class GoogleBrowerCookie:
     def __init__(self, host):
         self.host = host
         self.local_state = os.environ['LOCALAPPDATA'] + r'\Google\Chrome\User Data\Local State'

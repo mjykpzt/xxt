@@ -2,7 +2,7 @@ from Browser_tools import BrowserReader
 import requests
 
 
-class RequestXXT():
+class RequestXXT:
     def __init__(self, url):
         self.url = url
         self.headers = self.__init_headers()

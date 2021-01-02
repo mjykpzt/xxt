@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import re
 
 
-class ParseXXT():
+class ParseXXT:
     def __init__(self):
         self.title = []
         self.choose = []
@@ -25,13 +25,13 @@ class ParseXXT():
         find_all_xx = soup.find_all('ul', 'Zy_ulTop')
         find_all_da = soup.find_all('div', 'Py_answer clearfix')
         for i in find_all_top:
-            self.top = i.get('value') + '\n'
+            self.top = i.get('value').replace('\n','')
         for i in find_all_tm:
-            self.title.append(i.div.text.replace('\n', '') + '\n')
+            self.title.append(i.div.text.replace('\n', ''))
         for i in find_all_xx:
             self.choose.append(i.text.replace('\n\n', ''))
         for i in find_all_da:
-            self.answer.append(i.text.replace('\n', '') + "\n")
+            self.answer.append(i.text.replace('\n', ''))
 
     def pasre_pageNum(self, text):
         re_compile = re.compile(r'showPage\(\s*?\d+\s*?,\s*?(\d+)\s*?,.*?\)')

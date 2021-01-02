@@ -1,4 +1,4 @@
-class WriteTxt():
+class WriteTxt:
     chapters = 0
     qs = 0
 
@@ -10,14 +10,15 @@ class WriteTxt():
     def write(self, a, b, c, top):
         WriteTxt.chapters += 1
         with open(self.path, self.mode, encoding=self.encoding) as fp:
-            fp.write(top)
+            fp.write(top+'\n')
             for i in range(len(c)):
                 WriteTxt.qs += 1
-                fp.write(str(i + 1) + "." + a[i])
-                fp.write(b[i])
-                fp.write('\n')
-                fp.write(c[i])
-                fp.write('\n')
+                fp.write(str(i + 1) + "." + a[i]+'\n')
+                if b[i][0] =='\n':
+                    b[i]=b[i][1:]
+                fp.write(b[i]+'\n')
+                fp.write(c[i]+'\n')
+                fp.write('\n\n')
         self.__log(top, len(c))
 
     def __log(self, a, b):
