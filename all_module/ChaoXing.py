@@ -16,7 +16,7 @@ class ChaoXing:
         self.type = self.__parse_path()
         self.start_page = 1
         self.end_page = int(self.get_end_page())
-        self.url_flag = ParseXXT.ParseXXT().has_pageNum(url)
+        self.url_flag = ParseXXT.ParseXXTUrl().has_pageNum(url)
         self.res = re.compile(r"{}\d+".format(self.url_st))
         self.sleep_time = [3, 5]
 
@@ -24,15 +24,16 @@ class ChaoXing:
         return RequestXXT.RequestXXT(url).request_xxt()
 
     def get_end_page(self):
-        return ParseXXT.ParseXXT().pasre_pageNum(self.get_main_text(self.url))
+        return ParseXXT.ParseXXTUrl().pasre_pageNum(self.get_main_text(self.url))
 
     def get_xxt_one_questions(self, url=None):
         if url is None:
             url = self.url
-        url_set = ParseXXT.ParseXXT().pasre_total(self.get_main_text(url))
-        for i in url_set:
-            text = RequestXXT.RequestXXT(self.base_url + i).request_xxt()
-            all_tm = ParseXXT.ParseXXT()
+        parseXXTUrl = ParseXXT.ParseXXTUrl()
+        parseXXTUrl.pasre_total(self.get_main_text(url))
+        for i in range(len(parseXXTUrl.urls)):
+            text = RequestXXT.RequestXXT(self.base_url + parseXXTUrl.urls[i]).request_xxt()
+            all_tm = ParseXXT.ParseXXTPage(top=parseXXTUrl.tops[i])
             all_tm.pasre_subject(text)
             self.__write(all_tm)
             time.sleep(random.uniform(self.sleep_time[0], self.sleep_time[1]))
@@ -42,7 +43,7 @@ class ChaoXing:
         if self.end_page > 1:
             url = self.url
             if not self.url_flag:
-                url += self.url_st+"2"
+                url += self.url_st + "2"
             for i in range(2, self.end_page + 1):
                 new_url = self.res.sub(self.url_st + str(i), url, 1)
                 self.get_xxt_one_questions(new_url)
