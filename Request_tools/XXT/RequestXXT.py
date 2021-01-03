@@ -1,6 +1,6 @@
 from Browser_tools import BrowserReader
 import requests
-
+from Request_tools import StatusTreatment
 
 class RequestXXT:
     def __init__(self, url):
@@ -33,4 +33,5 @@ class RequestXXT:
     def request_xxt(self):
         html = requests.get(self.url, headers=self.headers, allow_redirects=False)
         html.encoding = html.apparent_encoding
+        StatusTreatment.Status_200(html)
         return html.text
