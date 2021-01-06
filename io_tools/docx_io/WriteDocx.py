@@ -53,7 +53,7 @@ class W_Docx:
         doxc_func.AddParagraphText(self.document, text, self.title_size, self.title_color)
 
     def w_main(self, text):
-        if text[0] == '\n':
+        if len(text)>0 and text[0] == '\n':
             text = text[1:]
         doxc_func.AddParagraphText(self.document, text, self.main_size, self.main_color)
 

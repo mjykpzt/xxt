@@ -2,24 +2,45 @@ from bs4 import BeautifulSoup
 import re
 
 
-class ParseXXTPage:
+class ParseXXT_TiMu:
     def __init__(self, top=''):
         self.title = []
         self.choose = []
         self.answer = []
         self.top = top
 
-    def pasre_subject(self, html):
+    def pasre_subject(self, soup):
+        # soup = BeautifulSoup(html, 'lxml')
+        find_tm = soup.find('div', 'Zy_TItle clearfix')
+        self.title.append(find_tm.div.text.replace('\n', '').replace('\t', ''))
+        find_xx = soup.find('ul', 'Zy_ulTop')
+        if find_xx is not None:
+            self.choose.append(find_xx.text.replace('\n\n', '').replace('\t', ''))
+        else:
+            find_a = soup.find("div", "Py_tk", id=False)
+            if find_a:
+                self.choose.append(find_a.text)
+            else:
+                self.choose.append("")
+            find_b = soup.find("div", "Py_tk", id=True)
+            if find_b:
+                self.answer.append(find_b.text)
+            else:
+                self.answer.append("")
+            return
+        find_da = soup.find('div', 'Py_answer clearfix')
+        self.answer.append(find_da.text.replace('\n', '').replace('\t', ''))
+
+
+class parseXXTPage:
+    def __init__(self):
+        self.tiMus = []
+
+    def pasre_timus(self, html):
         soup = BeautifulSoup(html, 'lxml')
-        find_all_tm = soup.find_all('div', 'Zy_TItle clearfix')
-        find_all_xx = soup.find_all('ul', 'Zy_ulTop')
-        find_all_da = soup.find_all('div', 'Py_answer clearfix')
-        for i in find_all_tm:
-            self.title.append(i.div.text.replace('\n', '').replace('\t', ''))
-        for i in find_all_xx:
-            self.choose.append(i.text.replace('\n\n', '').replace('\t', ''))
-        for i in find_all_da:
-            self.answer.append(i.text.replace('\n', '').replace('\t', ''))
+        find_all = soup.find_all('div', 'TiMu')
+        for i in find_all:
+            self.tiMus.append(i)
 
 
 class ParseXXTUrl:

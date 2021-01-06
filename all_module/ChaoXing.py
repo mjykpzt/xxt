@@ -13,7 +13,7 @@ class ChaoXing:
         self.url_st = "&pageNum="
         self.url = url
         self.path = path
-        self.type = self.__parse_path()
+        self.save_type = self.__parse_path()
         self.start_page = 1
         self.end_page = int(self.get_end_page())
         self.url_flag = ParseXXT.ParseXXTUrl().has_pageNum(url)
@@ -33,8 +33,11 @@ class ChaoXing:
         parseXXTUrl.pasre_total(self.get_main_text(url))
         for i in range(len(parseXXTUrl.urls)):
             text = RequestXXT.RequestXXT(self.base_url + parseXXTUrl.urls[i]).request_xxt()
-            all_tm = ParseXXT.ParseXXTPage(top=parseXXTUrl.tops[i])
-            all_tm.pasre_subject(text)
+            xxt_page = ParseXXT.parseXXTPage()
+            xxt_page.pasre_timus(text)
+            all_tm = ParseXXT.ParseXXT_TiMu(top=parseXXTUrl.tops[i])
+            for j in xxt_page.tiMus:
+                all_tm.pasre_subject(j)
             self.__write(all_tm)
             time.sleep(random.uniform(self.sleep_time[0], self.sleep_time[1]))
 
@@ -57,9 +60,9 @@ class ChaoXing:
         return 0
 
     def __write(self, all_tm):
-        if self.type == 0:
+        if self.save_type == 0:
             writeTxt.WriteTxt(self.path).write(all_tm.title, all_tm.choose, all_tm.answer, all_tm.top)
-        elif self.type == 1:
+        elif self.save_type == 1:
             w_docx = WriteDocx.W_Docx(self.path)
             w_docx.write(all_tm.title, all_tm.choose, all_tm.answer, all_tm.top)
             w_docx.save()
