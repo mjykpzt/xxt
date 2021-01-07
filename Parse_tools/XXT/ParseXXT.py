@@ -10,7 +10,6 @@ class ParseXXT_TiMu:
         self.top = top
 
     def pasre_subject(self, soup):
-        # soup = BeautifulSoup(html, 'lxml')
         find_tm = soup.find('div', 'Zy_TItle clearfix')
         self.title.append(find_tm.div.text.replace('\n', '').replace('\t', ''))
         find_xx = soup.find('ul', 'Zy_ulTop')

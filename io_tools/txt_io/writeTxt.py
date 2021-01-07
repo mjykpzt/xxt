@@ -14,7 +14,7 @@ class WriteTxt:
             for i in range(len(c)):
                 WriteTxt.qs += 1
                 fp.write(str(i + 1) + "." + a[i]+'\n')
-                if b[i][0] =='\n':
+                if len(b[i])>0 and b[i][0] =='\n':
                     b[i]=b[i][1:]
                 fp.write(b[i]+'\n')
                 fp.write(c[i]+'\n')
